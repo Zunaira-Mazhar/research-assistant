@@ -426,7 +426,7 @@ def show_new_research_page():
         <div class="hero-banner banner-research fade-in">
             <div class="hero-icon" style="font-size: 3rem;">📚🔬</div>
             <h1>AI Research Assistant</h1>
-            <p>Get research summaries backed by real, verifiable papers — instantly.</p>
+            <p>Get research summaries backed by real, verifiable papers instantly.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -589,7 +589,7 @@ def show_about_page():
         <div class="hero-banner banner-about fade-in">
             <div class="hero-icon" style="font-size: 3rem;">ℹ️📖</div>
             <h1>About This Tool</h1>
-            <p>Understand what real research says — without spending hours reading papers.</p>
+            <p>Understand what real research says without spending hours reading papers.</p>
         </div>
     """, unsafe_allow_html=True)
 
