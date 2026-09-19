@@ -8,15 +8,20 @@ from backend import (
 )
 
 st.set_page_config(
-    page_title="Research Assistant",
+    page_title="AI Research Assistant",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-#  CUSTOM STYLING
+#  CUSTOM STYLING 
 st.markdown("""
     <style>
+    :root {
+        --border-light: #E5E8EC;
+        --border-dark: rgba(255,255,255,.09);
+    }
+
     h1 {
         color: var(--text-color) !important;
         font-weight: 800;
@@ -82,6 +87,7 @@ st.markdown("""
         line-height: 1.7;
     }
 
+    /* ===== ANIMATIONS ===== */
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
@@ -98,6 +104,7 @@ st.markdown("""
         animation: pulse 2.5s ease-in-out infinite;
     }
 
+    /* ===== HERO BANNERS (original size/corners) ===== */
     .hero-banner {
         border-radius: 16px;
         padding: 40px;
@@ -127,15 +134,23 @@ st.markdown("""
         background: linear-gradient(135deg, #1E2A38 0%, #B4874F 100%);
     }
 
+    /* ===== FEATURE CARDS ===== */
     .feature-card {
-        background-color: #FFFFFF;
+        background: var(--secondary-background-color);
         border-radius: 14px;
         padding: 24px;
         text-align: center;
-        border: 1px solid #E5E8EC;
+        border: 1px solid var(--border-light);
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         transition: all 0.25s ease;
         height: 100%;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .feature-card {
+            border-color: var(--border-dark);
+            box-shadow: 0 8px 25px rgba(0,0,0,.20);
+        }
     }
     .feature-card:hover {
         transform: translateY(-5px);
@@ -147,14 +162,16 @@ st.markdown("""
         margin-bottom: 10px;
     }
     .feature-card h4 {
-        color: #1E2A38;
+        color: var(--text-color);
         margin-bottom: 6px;
     }
     .feature-card p {
-        color: #6B7280;
+        color: var(--text-color);
+        opacity: 0.70;
         font-size: 0.9rem;
     }
 
+    /* ===== VERDICT BADGES ===== */
     .verdict-badge {
         display: inline-block;
         padding: 4px 14px;
@@ -181,21 +198,29 @@ st.markdown("""
     }
 
     .claim-card {
-        background-color: #FFFFFF;
+        background: var(--secondary-background-color);
         border-radius: 14px;
         padding: 20px 24px;
         margin-bottom: 16px;
-        border: 1px solid #E5E8EC;
+        border: 1px solid var(--border-light);
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .claim-card {
+            border-color: var(--border-dark);
+            box-shadow: 0 8px 25px rgba(0,0,0,.20);
+        }
     }
     .claim-text {
         font-weight: 600;
-        color: #1E2A38;
+        color: var(--text-color);
         font-size: 1.02rem;
         margin-bottom: 8px;
     }
     .reasoning-text {
-        color: #4B5563;
+        color: var(--text-color);
+        opacity: 0.70;
         font-size: 0.92rem;
         line-height: 1.6;
     }
@@ -203,33 +228,88 @@ st.markdown("""
         color: #2E7D5B;
     }
 
-    .about-step {
-        background-color: #FFFFFF;
-        border-radius: 14px;
-        padding: 20px;
-        border: 1px solid #E5E8EC;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
+    /* ===== ABOUT PAGE (rich layout, dark-mode aware) ===== */
+    .about-intro {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 28px;
     }
-    .about-step div:last-child {
-        color: #1E2A38;
+    .about-intro .big-icon {
+        font-size: 3.2rem;
+        margin-bottom: 8px;
     }
-    .about-step .step-number {
-        background: linear-gradient(135deg, #2E7D5B, #256B4C);
-        color: white;
-        font-weight: 700;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
+    .about-intro .heading {
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: var(--text-color);
+    }
+    .about-intro .text {
+        opacity: 0.70;
+        line-height: 1.65;
+        color: var(--text-color);
+    }
+
+    .about-card {
+        background: var(--secondary-background-color);
+        border: 1px solid var(--border-light);
+        border-radius: 18px;
+        padding: 23px;
+        height: 100%;
+        box-shadow: 0 8px 25px rgba(20,25,40,.06);
+    }
+    @media (prefers-color-scheme: dark) {
+        .about-card {
+            border-color: var(--border-dark);
+            box-shadow: 0 8px 25px rgba(0,0,0,.20);
+        }
+    }
+    .about-card .step {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
+        background: linear-gradient(135deg, #2E7D5B, #256B4C);
+        color: white;
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin-bottom: 15px;
+    }
+    .about-card .title {
+        font-weight: 800;
+        margin-bottom: 7px;
+        color: var(--text-color);
+    }
+    .about-card .text {
+        opacity: 0.70;
+        line-height: 1.55;
+        font-size: 0.9rem;
+        color: var(--text-color);
     }
 
+    .tech-card {
+        background: var(--secondary-background-color);
+        border: 1px solid var(--border-light);
+        border-radius: 14px;
+        text-align: center;
+        padding: 18px;
+    }
+    @media (prefers-color-scheme: dark) {
+        .tech-card {
+            border-color: var(--border-dark);
+        }
+    }
+    .tech-card .icon {
+        font-size: 1.6rem;
+        margin-bottom: 6px;
+    }
+    .tech-card .title {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+
+    /* ===== SIDEBAR ===== */
     section[data-testid="stSidebar"] {
         background-color: #1E2A38;
     }
@@ -286,9 +366,8 @@ st.markdown("""
         .claim-text {
             font-size: 0.95rem;
         }
-        .about-step {
-            padding: 14px;
-            gap: 12px;
+        .about-card {
+            padding: 16px;
         }
         div.stButton > button {
             font-size: 14px;
@@ -300,7 +379,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-#  SESSION STATE
+#  SESSION STATE 
 if "current_page" not in st.session_state:
     st.session_state.current_page = "New Research"
 if "history" not in st.session_state:
@@ -309,7 +388,7 @@ if "verification_output" not in st.session_state:
     st.session_state.verification_output = None
 
 
-#  SIDEBAR
+#  SIDEBAR 
 with st.sidebar:
     st.markdown("## 📚 Research Assistant")
     st.markdown("---")
@@ -341,13 +420,13 @@ def verdict_class(verdict: str) -> str:
     return "verdict-unknown"
 
 
-#  PAGE: NEW RESEARCH
+#  PAGE: NEW RESEARCH 
 def show_new_research_page():
     st.markdown("""
         <div class="hero-banner banner-research fade-in">
             <div class="hero-icon" style="font-size: 3rem;">📚🔬</div>
-            <h1>Research Assistant</h1>
-            <p>Get research summaries backed by real, verifiable papers instantly.</p>
+            <h1>AI Research Assistant</h1>
+            <p>Get research summaries backed by real, verifiable papers — instantly.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -402,7 +481,7 @@ def show_new_research_page():
             st.markdown('</div>', unsafe_allow_html=True)
 
 
-#  PAGE: VERIFY DOCUMENT
+#  PAGE: VERIFY DOCUMENT 
 def show_verify_document_page():
     st.markdown("""
         <div class="hero-banner banner-verify fade-in">
@@ -486,7 +565,7 @@ def show_verify_document_page():
         st.markdown('</div>', unsafe_allow_html=True)
 
 
-#  PAGE: HISTORY
+#  PAGE: HISTORY 
 def show_history_page():
     st.markdown("""
         <div class="hero-banner banner-history fade-in">
@@ -504,36 +583,69 @@ def show_history_page():
                 st.markdown(item["report"])
 
 
-#  PAGE: ABOUT
+#  PAGE: ABOUT 
 def show_about_page():
     st.markdown("""
         <div class="hero-banner banner-about fade-in">
             <div class="hero-icon" style="font-size: 3rem;">ℹ️📖</div>
             <h1>About This Tool</h1>
-            <p>Understand what real research says without spending hours reading papers.</p>
+            <p>Understand what real research says — without spending hours reading papers.</p>
         </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+        <div class="about-intro">
+            <div class="big-icon">🔬</div>
+            <div class="heading">How Research Assistant Works</div>
+            <div class="text">
+                Enter a topic or upload a document, and the system helps connect
+                your research with real academic evidence.
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    c1, c2 = st.columns(2)
+
     steps = [
-        ("1", "You enter a topic or upload a document"),
-        ("2", "The system searches real papers using the OpenAlex database"),
-        ("3", "AI summarizes findings, checks for contradictions, and identifies research gaps"),
-        ("4", "You get a report with real, verifiable citations you can click and check yourself"),
+        ("1", "Enter or Upload", "Enter a research topic or upload your own PDF, DOCX, or TXT document."),
+        ("2", "Find Real Research", "The system searches published papers using the OpenAlex database."),
+        ("3", "Analyze Evidence", "AI summarizes findings, checks claims, contradictions, and research gaps."),
+        ("4", "Verify Yourself", "Reports include real citations and links so you can inspect the evidence."),
     ]
 
-    for number, text in steps:
-        st.markdown(f"""
-            <div class="about-step">
-                <div class="step-number">{number}</div>
-                <div>{text}</div>
-            </div>
-        """, unsafe_allow_html=True)
+    for i, (number, title, description) in enumerate(steps):
+        col = c1 if i % 2 == 0 else c2
+        with col:
+            st.markdown(f"""
+                <div class="about-card fade-in">
+                    <div class="step">{number}</div>
+                    <div class="title">{title}</div>
+                    <div class="text">{description}</div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.caption("Built with Python, LangGraph, Groq, and Streamlit.")
+    st.markdown("---")
+
+    tech1, tech2, tech3, tech4 = st.columns(4)
+    technologies = [
+        ("🐍", "Python"),
+        ("🧩", "LangGraph"),
+        ("⚡", "Groq"),
+        ("🎈", "Streamlit"),
+    ]
+
+    for col, (icon, name) in zip((tech1, tech2, tech3, tech4), technologies):
+        with col:
+            st.markdown(f"""
+                <div class="tech-card">
+                    <div class="icon">{icon}</div>
+                    <div class="title">{name}</div>
+                </div>
+            """, unsafe_allow_html=True)
 
 
-#  MAIN ROUTING
+#  MAIN ROUTING 
 if st.session_state.current_page == "New Research":
     show_new_research_page()
 elif st.session_state.current_page == "Verify Document":
